@@ -1,3 +1,10 @@
+DROP TABLE IF EXISTS `Transaction`;
+DROP TABLE IF EXISTS `Account`	;
+DROP TABLE IF EXISTS Employee;
+DROP TABLE IF EXISTS Person;
+DROP TABLE IF EXISTS Branch;
+
+
 
 CREATE TABLE Person (
 	PersonID Integer NOT NULL AUTO_INCREMENT,
@@ -9,7 +16,7 @@ CREATE TABLE Person (
     Primary key (PersonID)
     );
     
-CREATE TABLE Account (
+CREATE TABLE `Account` (
     AccountID INT PRIMARY KEY,
     AccountNumber VARCHAR(20) UNIQUE,
     AccountType VARCHAR(50),
@@ -22,12 +29,13 @@ CREATE TABLE Account (
     FOREIGN KEY (PersonID) REFERENCES Person(PersonID)
 );
 
-CREATE TABLE Transaction (
+CREATE TABLE `Transaction` (
     TransactionID INT PRIMARY KEY,
     AccountID INT,
     TransactionType VARCHAR(50),
     Amount FLOAT,
     TransactionDate DATETIME,
+    TransferAccountID INT,
     FOREIGN KEY (AccountID) REFERENCES Account(AccountID)
 );
 
@@ -46,3 +54,10 @@ CREATE TABLE Employee(
     FOREIGN KEY (BranchID) REFERENCES Branch(BranchID),
     FOREIGN KEY (PersonID) REFERENCES Person(PersonID)
 );
+
+
+SELECT * FROM Person;
+SELECT * FROM Account;
+SELECT * FROM Employee;
+SELECT * FROM Branch;
+SELECT * FROM Transaction;
