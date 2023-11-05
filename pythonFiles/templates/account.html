@@ -1,9 +1,15 @@
 <center>
-    {% for info in info %}
-    <ul key ={{info.Username}}>
+    <ul key = {{info}}>
+    Welcome! Logged in as {{info[0]}}.
+    </ul>
+    
+    {% for inf in info[1] %}
+    <ul key = {{inf}}>
+        {% for key, value in inf.items() %}
         <li>
-            {info.Username}
+            key: {{key}} value: {{value}}
         </li>
+        {% endfor %}
     </ul>
     {% endfor %}
 </center>
