@@ -64,7 +64,6 @@ CREATE TABLE Employee(
 );
 
 
-
 SELECT * FROM UserCredentials;
 SELECT * FROM Person;
 SELECT * FROM Account;
