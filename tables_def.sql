@@ -3,8 +3,16 @@ DROP TABLE IF EXISTS `Account`	;
 DROP TABLE IF EXISTS Employee;
 DROP TABLE IF EXISTS Person;
 DROP TABLE IF EXISTS Branch;
+DROP TABLE IF EXISTS UserCredentials;
 
 
+CREATE TABLE UserCredentials (
+    PersonID INTEGER NOT NULL,
+    Email VARCHAR(50) NOT NULL,
+    Password VARCHAR(100) NOT NULL,
+    PRIMARY KEY (PersonID),
+    UNIQUE (Email)
+);
 
 CREATE TABLE Person (
 	PersonID Integer NOT NULL AUTO_INCREMENT,
@@ -30,7 +38,7 @@ CREATE TABLE `Account` (
 );
 
 CREATE TABLE `Transaction` (
-    TransactionID INT PRIMARY KEY,
+    TransactionID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     AccountID INT,
     TransactionType VARCHAR(50),
     Amount FLOAT,
@@ -56,8 +64,13 @@ CREATE TABLE Employee(
 );
 
 
+
+SELECT * FROM UserCredentials;
 SELECT * FROM Person;
 SELECT * FROM Account;
 SELECT * FROM Employee;
 SELECT * FROM Branch;
-SELECT * FROM Transaction;
+SELECT * FROM Transaction ORDER BY TransactionID DESC;
+-- WHERE Amount = 8;
+
+SELECT AccountID, AccountType FROM Account WHERE AccountNumber = '43136785'; 
