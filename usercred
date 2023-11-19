@@ -1,0 +1,59 @@
+import json
+import random
+import pandas as pd
+import pymysql
+from faker import Faker
+from datetime import datetime, timedelta, time
+from dateutil.relativedelta import relativedelta
+from dateutil.parser import parse
+import hashlib
+import pytz
+
+pst = pytz.timezone('America/Los_Angeles')
+
+# Establish a connection to the database
+connection = pymysql.connect(
+    host='34.94.165.202',
+    user='root',  # enter your username
+    password='thereisnopassword',  # enter your password
+    database='banking_system'
+)
+
+# Insert, delete, and update functions for UserCredentials table
+def insert_user_credentials(email, password):
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+
+    with connection.cursor() as cursor:
+        try:
+            cursor.execute("INSERT INTO UserCredentials (Email, Password) VALUES (%s, %s)", (email, hashed_password))
+            connection.commit()
+            print("User credentials inserted successfully.")
+        except Exception as e:
+            connection.rollback()
+            print("Error occurred during insert. Rolling back changes.")
+            print("Error:", e)
+
+def delete_user_credentials(user_id):
+    with connection.cursor() as cursor:
+        try:
+            cursor.execute("DELETE FROM UserCredentials WHERE UserID = %s", (user_id,))
+            connection.commit()
+            print("User credentials deleted successfully.")
+        except Exception as e:
+            connection.rollback()
+            print("Error occurred during delete. Rolling back changes.")
+            print("Error:", e)
+
+def update_user_credentials(user_id, new_email, new_password):
+    hashed_password = hashlib.sha256(new_password.encode()).hexdigest()
+
+    with connection.cursor() as cursor:
+        try:
+            cursor.execute("UPDATE UserCredentials SET Email = %s, Password = %s WHERE UserID = %s", (new_email, hashed_password, user_id))
+            connection.commit()
+            print("User credentials updated successfully.")
+        except Exception as e:
+            connection.rollback()
+            print("Error occurred during update. Rolling back changes.")
+            print("Error:", e)
+
