@@ -62,6 +62,8 @@ CREATE TABLE Employee(
     FOREIGN KEY (BranchID) REFERENCES Branch(BranchID),
     FOREIGN KEY (PersonID) REFERENCES Person(PersonID)
 );
+ALTER TABLE Person
+ADD CONSTRAINT unique_email UNIQUE (Email);
 
 
 SELECT * FROM UserCredentials;
@@ -73,3 +75,42 @@ SELECT * FROM Transaction ORDER BY TransactionID DESC;
 -- WHERE Amount = 8;
 
 SELECT AccountID, AccountType FROM Account WHERE AccountNumber = '43136785'; 
+
+
+SELECT B.BranchName, COUNT(A.AccountID) AS TotalAccounts
+FROM Account A
+JOIN Person P ON A.PersonID = P.PersonID
+JOIN Employee E ON P.PersonID = E.PersonID
+JOIN Branch B ON E.BranchID = B.BranchID
+GROUP BY B.BranchName;
+
+SELECT t.TransactionID, t.TransactionType, 
+        t.Amount, t.TransactionDate, 
+        t.TransferAccountID,  a.AccountID, 
+        a.AccountNumber, a.AccountType
+FROM Transaction t INNER JOIN 
+     Account a ON t.AccountID = a.Account;
+
+SELECT t.TransactionID, t.TransactionType, 
+       t.Amount, t.TransactionDate, 
+       t.TransferAccountID, a.AccountID, 
+       a.AccountNumber, a.AccountType
+FROM Account a INNER JOIN 
+     Transaction t ON t.AccountID = a.AccountID;
+     
+SELECT email, COUNT(email)
+FROM Person
+GROUP BY email
+HAVING COUNT(email) > 1;
+
+SELECT *
+FROM PersonAccountAccount
+WHERE email like 'magna.ut.tincidunt@icloud.edu';
+
+UPDATE Person
+SET Email = 'magna.ut.tincidunt@icloud.com'
+WHERE Email = 'magna.ut.tincidunt@icloud.edu' AND PersonID = 421;
+
+
+CREATE TABLE temp_person AS SELECT * FROM Person
+
