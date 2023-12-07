@@ -64,18 +64,15 @@ CREATE TABLE Employee(
 );
 ALTER TABLE Person
 ADD CONSTRAINT unique_email UNIQUE (Email);
-
-
-SELECT * FROM UserCredentials;
-SELECT * FROM Person;
-SELECT * FROM Account;
+CREATE INDEX idx_Transaction_TransactionDate ON Transaction(TransactionDate);
+/*
+SELECT * FROM UserCredentials order by PersonID DESC;
+SELECT * FROM Person order by PersonID DESC;
+SELECT * FROM Account order by AccountID DESC;
 SELECT * FROM Employee;
 SELECT * FROM Branch;
 SELECT * FROM Transaction ORDER BY TransactionID DESC;
 -- WHERE Amount = 8;
-
-SELECT AccountID, AccountType FROM Account WHERE AccountNumber = '43136785'; 
-
 
 SELECT B.BranchName, COUNT(A.AccountID) AS TotalAccounts
 FROM Account A
@@ -104,13 +101,25 @@ GROUP BY email
 HAVING COUNT(email) > 1;
 
 SELECT *
-FROM PersonAccountAccount
-WHERE email like 'magna.ut.tincidunt@icloud.edu';
+FROM Person
+WHERE DOB > '1980-01-01';
 
-UPDATE Person
-SET Email = 'magna.ut.tincidunt@icloud.com'
-WHERE Email = 'magna.ut.tincidunt@icloud.edu' AND PersonID = 421;
+SELECT t.TransactionID, t.TransactionType, t.Amount, t.TransactionDate, 
+       t.TransferAccountID, a.AccountID, a.AccountNumber, a.AccountType
+FROM Transaction t 
+INNER JOIN Account a ON t.AccountID = a.AccountID
+WHERE t.TransactionDate >=  time  ;
+ -- NOW() - INTERVAL 90 DAY
+ 
+*/
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 
-
-CREATE TABLE temp_person AS SELECT * FROM Person
 
